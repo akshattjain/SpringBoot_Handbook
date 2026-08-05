@@ -1,8 +1,16 @@
 package org.example;
 
+import org.example.notification.EmailNotification;
+import org.example.notification.Notification;
+import org.example.notification.SmsService;
+
 public class OrderService {
 
-    EmailNotification notification =new EmailNotification();
+    Notification notification;
+
+    public OrderService(Notification notification){
+        this.notification =notification;
+    }
 
     public void placeOrder(){
 
