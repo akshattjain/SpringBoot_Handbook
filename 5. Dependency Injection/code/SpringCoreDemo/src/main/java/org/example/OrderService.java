@@ -1,8 +1,7 @@
 package org.example;
 
+import org.example.payment.PaymentService;
 import org.springframework.stereotype.Component;
-
-import java.sql.SQLOutput;
 
 @Component
 public class OrderService {
