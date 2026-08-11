@@ -1,8 +1,10 @@
 package org.example;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
+@Scope("singleton")
 public class OrderService {
     private PaymentService paymentService;
 
