@@ -7,7 +7,6 @@ import jakarta.persistence.Id;
 public class Student {
     @Id
     private long id;
-
     private String name;
     private int age;
     private String email;
