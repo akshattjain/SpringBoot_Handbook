@@ -20,6 +20,7 @@ public class StudentService {
     }
 
     public Student createStudent(Student studentReq){
+        studentReq.setDeleted(false);
         Student studentResp= studentRepository.save(studentReq);
         return studentResp;
     }
@@ -72,5 +73,9 @@ public class StudentService {
         studentRepository.deleteById(id);
 
         return true;
+    }
+
+    public Boolean deleteStudentSoftly(Long id){
+        return false;
     }
 }

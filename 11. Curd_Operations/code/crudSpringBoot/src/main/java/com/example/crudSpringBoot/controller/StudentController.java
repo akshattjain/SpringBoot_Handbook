@@ -2,6 +2,7 @@ package com.example.crudSpringBoot.controller;
 
 import com.example.crudSpringBoot.entity.Student;
 import com.example.crudSpringBoot.service.StudentService;
+import org.hibernate.annotations.SoftDelete;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -68,6 +69,17 @@ public class StudentController {
         Boolean isDeleted= studentService.deleteStudent(id);
 
         if(!isDeleted){
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok("Record Deleted");
+    }
+
+    @PatchMapping("/delete-soft/{id}")
+    public ResponseEntity<String> deleteStudentSoftly(@PathVariable long id){
+        Boolean isdeleted = studentService.deleteStudentSoftly(id);
+
+        if(!isdeleted){
             return ResponseEntity.notFound().build();
         }
 
