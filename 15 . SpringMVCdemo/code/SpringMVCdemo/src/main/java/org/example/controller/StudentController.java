@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/students")
 public class StudentController {
@@ -25,7 +27,7 @@ public class StudentController {
     }
 
     @GetMapping("/id")
-    public ResponseEntity<String> getStudent(@PathVariable Long id){
+    public ResponseEntity<Student> getStudent(@PathVariable Long id){
 
         Student studentResp=studentService.getStudent(id);
 
@@ -35,4 +37,18 @@ public class StudentController {
 
         return ResponseEntity.ok(studentResp);
     }
+
+    @GetMapping()
+    public ResponseEntity<List<Student>> getAllStudent(){
+
+        List<Student> studentResp=studentService.getAllStudent();
+
+        if(studentResp.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(studentResp);
+    }
+
+
 }
