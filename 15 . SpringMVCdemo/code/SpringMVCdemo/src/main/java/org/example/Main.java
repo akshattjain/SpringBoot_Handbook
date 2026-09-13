@@ -1,14 +1,22 @@
 package org.example;
 
 import org.apache.catalina.Context;
+import org.apache.catalina.LifecycleException;
 import org.apache.catalina.startup.Tomcat;
+import org.example.config.WebConfig;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.servlet.DispatcherServlet;
 
 import java.io.File;
+import java.sql.SQLOutput;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws LifecycleException {
 
         //Boiler Plate Code
 
@@ -18,8 +26,28 @@ public class Main {
         tomcat.getConnector();
 
         String contextPath="";
-        String baseDoc=new File(System.getProperty("src/main/WebApp")).getAbsolutePath();
+        String baseDoc=new File("src/main/WebApp").getAbsolutePath();
 
         Context context= tomcat.addContext(contextPath,baseDoc);
+
+        //ApplicationContext
+
+        AnnotationConfigWebApplicationContext springContext = new AnnotationConfigWebApplicationContext();
+
+        springContext.register(WebConfig.class);
+
+        DispatcherServlet dispatcherServlet= new DispatcherServlet(springContext);
+
+        Tomcat.addServlet(context, "dispatcherServlet" , dispatcherServlet);
+
+        context.addServletMappingDecoded("/","dispatcherServlet");
+
+        tomcat.start();
+
+        System.out.println("TomCat started on port 8080");
+
+        tomcat.getServer().await();
+
+
     }
 }
