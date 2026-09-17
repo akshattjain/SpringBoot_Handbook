@@ -1,5 +1,7 @@
 package com.example.crudSpringBoot.controller;
 
+import com.example.crudSpringBoot.dto.StudentRequestDTO;
+import com.example.crudSpringBoot.dto.StudentResponseDTO;
 import com.example.crudSpringBoot.entity.Student;
 import com.example.crudSpringBoot.service.StudentService;
 import org.springframework.http.HttpStatus;
@@ -20,8 +22,9 @@ public class StudentController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Student> createStudent(@RequestBody Student student){
-        Student createdStudent =  studentService.createStudent(student);
+    public ResponseEntity<StudentResponseDTO> createStudent(@RequestBody StudentRequestDTO studentRequestDTO){
+
+        StudentResponseDTO createdStudent =  studentService.createStudent(studentRequestDTO);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(createdStudent);

@@ -1,5 +1,7 @@
 package com.example.crudSpringBoot.service;
 
+import com.example.crudSpringBoot.dto.StudentRequestDTO;
+import com.example.crudSpringBoot.dto.StudentResponseDTO;
 import com.example.crudSpringBoot.entity.Student;
 import com.example.crudSpringBoot.repository.StudentRepository;
 import org.hibernate.query.sqm.sql.internal.PluralValuedSimplePathInterpretation;
@@ -19,9 +21,12 @@ public class StudentService {
         this.studentRepository=studentRepository;
     }
 
-    public Student createStudent(Student studentReq){
-        Student studentResp= studentRepository.save(studentReq);
-        return studentResp;
+    public StudentResponseDTO createStudent(StudentRequestDTO studentRequestDTO){
+        Student student= mapToEntity(studentRequestDTO);
+
+        Student studentResp = studentRepository.save(student);
+
+        return mapToDTO(studentResp);
     }
 
     public Student getStudent(Long id){
@@ -72,5 +77,33 @@ public class StudentService {
         studentRepository.deleteById(id);
 
         return true;
+    }
+
+    private Student mapToEntity(StudentRequestDTO studentRequestDTO){
+        Student student =new Student();
+
+        student.setName(studentRequestDTO.getName());
+        student.setSubject(studentRequestDTO.getSubject());
+        student.setAge(studentRequestDTO.getAge());
+        student.setEmail(studentRequestDTO.getEmail());
+        student.setRollNo(studentRequestDTO.getRollNo());
+
+        return student;
+    }
+
+    private StudentResponseDTO mapToDTO(Student student){
+        StudentResponseDTO studentResponseDTO=new StudentResponseDTO();
+
+        studentResponseDTO.setId(student.getId());
+        studentResponseDTO.setName(student.getName());
+        studentResponseDTO.setAge(student.getAge());
+        studentResponseDTO.setEmail(student.getEmail());
+        studentResponseDTO.setSubject(student.getSubject());
+        studentResponseDTO.setRollNo(student.getRollNo());
+        studentResponseDTO.setMessage("Student saved successfully");
+
+        return studentResponseDTO;
+
+
     }
 }
