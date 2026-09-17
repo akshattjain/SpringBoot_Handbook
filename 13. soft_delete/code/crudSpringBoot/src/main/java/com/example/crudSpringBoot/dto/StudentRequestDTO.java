@@ -1,10 +1,20 @@
 package com.example.crudSpringBoot.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+
 public class StudentRequestDTO {
+    @NotBlank
     private String name;
+    @Min(value = 18)
     private int age;
+    @Email
     private String email;
+    @NotEmpty
     private int rollNo;
+    @NotEmpty
     private String subject;
 
     public String getName() {
