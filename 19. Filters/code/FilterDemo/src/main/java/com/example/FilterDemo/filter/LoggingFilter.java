@@ -1,12 +1,14 @@
 package com.example.FilterDemo.filter;
 
 import jakarta.servlet.*;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-@Component
+//@Component
 public class LoggingFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest,
@@ -14,11 +16,27 @@ public class LoggingFilter implements Filter {
                          FilterChain filterChain)
             throws IOException, ServletException {
 
-        System.out.println("Request entered in logging filter.");
+//        System.out.println("Request entered in logging filter.");
+//
+//        filterChain.doFilter(servletRequest,servletResponse);
+//
+//        System.out.println("Request exiting in Logging Filter.");
 
-        filterChain.doFilter(servletRequest,servletResponse);
+        HttpServletRequest httpRequest =(HttpServletRequest) servletRequest;
 
-        System.out.println("Request exiting in Logging Filter.");
+
+        HttpServletResponse httpResponse =(HttpServletResponse) servletResponse;
+
+        System.out.println("Incoming request : "
+                + httpRequest.getMethod() +
+                httpRequest.getRequestURL());
+
+        filterChain.doFilter(servletRequest , servletResponse);
+
+        System.out.println("Response status : "+
+                httpResponse.getStatus());
     }
+
+
 
 }
